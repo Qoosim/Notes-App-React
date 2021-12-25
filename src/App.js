@@ -38,6 +38,16 @@ import {nanoid} from "nanoid"
  * 
  * Challenge 4: When the user edits a note, reposition
  * it in the list of notes to the top of the list
+ *
+ * Challenge 5: complete and implement the deleteNote function
+ *
+ * Hints:
+ * 1. What array method can be used to return a new
+ *    array that has filtered out an item based
+ *    on a condition?
+ * 2. Notice the parameters being based to the function
+ *    and think about how both of those parameters
+ *    can be passed in during the onClick event handler
  */
 
 function App() {
@@ -78,7 +88,6 @@ function App() {
       return newArray;
     })
   }
-
     /*
     This does not rearrange the notes
     setNotes(oldNotes => oldNotes.map(oldNote => {
@@ -87,6 +96,11 @@ function App() {
        : oldNote
     }))
     */ 
+
+  function deleteNote(event, noteId) {
+    event.stopPropagation();
+    setNotes(oldNotes => oldNotes.filter(note => note.id !== noteId))
+  }
 
   function findCurrentNote() {
     return notes.find(note => {
@@ -109,6 +123,7 @@ function App() {
           currentNote={findCurrentNote()}
           setCurrentNoteId={setCurrentNoteId}
           newNote={createNewNote}
+          deleteNote={deleteNote}
         />
         {
           currentNoteId &&
