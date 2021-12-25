@@ -23,14 +23,18 @@ import {nanoid} from "nanoid"
  */
 
 function App() {
-  const [notes, setNotes] = React.useState(JSON.parse(localStorage.getItem('notes')) || []);
+  const [notes, setNotes] = React.useState(() => JSON.parse(localStorage.getItem('notes')) || []);
   const [currentNoteId, setCurrentNoteId] = React.useState(
     (notes[0] && notes[0].id) || ""
   )
 
+  // Lazy State initialization
+  // const [state, setState] = React.useState(() => console.log('State initialization'));
+
   React.useEffect(() => {
     localStorage.setItem('notes', JSON.stringify(notes))
   }, [notes])
+
 
   function createNewNote() {
     const newNote = {
