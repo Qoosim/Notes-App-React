@@ -4,3 +4,6 @@
 
 ## ScreenShot
 ![screenshot](./src/images/note_app.jpeg)
+
+## Live Demo
+[Live Demo](https://qoosim-notes-app.netlify.app/) :point_left:
