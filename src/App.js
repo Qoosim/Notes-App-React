@@ -20,6 +20,24 @@ import {nanoid} from "nanoid"
  *    with the notes saved in localStorage. You'll need to
  *    use JSON.parse() to turn the stringified array back
  *    into a real JS array.
+ *
+ * This happened in the Sidebar component
+ *
+  * Challenge 3: Try to figure out a way to display only the
+  * first line of note.body as the note summary in the
+  * sidebar.
+  *
+  * Hint 1: note.body has "invisible" newline characters
+  * in the text every time there's a new line shown. E.g.
+  * the text in Note 1 is:
+  * "# Note summary\n\nBeginning of the note"
+  *
+  * Hint 2: See if you can split the string into an array
+  * using the "\n" newline character as the divider
+
+ * 
+ * Challenge 4: When the user edits a note, reposition
+ * it in the list of notes to the top of the list
  */
 
 function App() {
@@ -46,12 +64,29 @@ function App() {
   }
 
   function updateNote(text) {
-    setNotes(oldNotes => oldNotes.map(oldNote => {
-      return oldNote.id === currentNoteId
-        ? { ...oldNote, body: text }
-        : oldNote
-    }))
+    // Put most recently-modified note at the top
+    setNotes(oldNotes => {
+      const newArray = []
+      for (let i = 0; i < oldNotes.length; i++) {
+        const oldNote = oldNotes[i];
+        if (oldNote.id === currentNoteId) {
+          newArray.unshift({...oldNote, body: text})
+        } else {
+          newArray.push(oldNote)
+        }
+      }
+      return newArray;
+    })
   }
+
+    /*
+    This does not rearrange the notes
+    setNotes(oldNotes => oldNotes.map(oldNote => {
+     return oldNote.id === currentNoteId
+       ? { ...oldNote, body: text }
+       : oldNote
+    }))
+    */ 
 
   function findCurrentNote() {
     return notes.find(note => {
